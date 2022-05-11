@@ -1,0 +1,177 @@
+Module main()
+	//Steven Tarmann
+	//04/05/2022
+	//Program to track Calories burned during a workout session and save the info in parallel arrays
+
+	Display "Welcome to my Fitness Tracking application!"
+	Declare Integer select, count
+	Declare Real caloriesBurned[100], total
+	Set count = 0
+	Do
+		Set select = displayMenu()
+		Set caloriesBurned[count] = selectionProcessing(select)
+		If select < 12
+			count++
+		End If
+	While select < 12
+	
+	For Integer i = 0, i < count, i++
+		Set total = total + caloriesBurned[i]
+	End For
+
+	If count > 0
+		Display "The total amount of calories that you burned from " & count & " exercises was " & total & " calories! Thank you."
+	Else
+		Display "Thank you have a nice day."
+	End If
+
+End Module
+
+
+Function Integer displayMenu()
+	//INPUT: none
+	//PROCESSING: Prompts user for menu selection and validates input
+	//OUTPUT: returns menu selection as integer
+
+	Display "Please choose one of the following exercises that you have completed:" 
+	Display "1. Walking"
+	Display "2. Running"
+	Display "3. Cycling"
+	Display "4. Swimming"
+	Display "5. Weighlifting"
+	Display "6. Basketball"
+	Display "7. Boxing"
+	Display "8. Football"
+	Display "9. Tennis"
+	Display "10. Hockey"
+	Display "11. Soccer"
+	Display "12. Quit"
+
+	//Priming read
+	Display "Enter your selection(1-12): "
+	Declare Integer selection
+	Input selection
+
+	//input validation
+	While (selection > 12 OR selection < 1)
+		Display "Invalid selection. Please try another entry."
+	
+		//Second Read	
+		Display "Enter your selection(1-12): "
+		Input selection
+	End While 
+	Return selection
+End Function
+
+Function Real selectionProcessing(Integer selection)
+	//Input: menu selection integer
+	//Processing: use menu function to call the corresponding function
+	//Output: none
+
+	Declare Real met, cals
+	Declare String act
+
+	If (selection == 1)
+		selection == 3.5
+		Set act = walking
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 2)
+		Set met = 7.0
+		Set act = running
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 3)
+		Set met = 7.5
+		Set act = cycling
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 4)
+		Set met = 5.8
+		Set act = swimming
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 5)
+		Set met = 6.0
+		Set act = weightlifting
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 6)
+		Set met = 8.0
+		Set act = basketball
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 7)
+		Set met = 12.8
+		Set act = boxing
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 8)
+		Set met = 8.0
+		Set act = football
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 9)
+		Set met  = 7.3
+		Set act = tennis
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 10)
+		Set met = 8.0
+		Set act = hockey
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	Else If (selection == 11)
+		Set met = 10.0
+		Set act = soccer
+		Set cals = findCalories(met, act)
+		Display "You burned " & cals & " calories while performing " & act & "."
+	End If
+	Return cals
+End Function
+
+Function Real findCalories(Real metvalue, String activity)
+	//INPUT: receives an MET value as a real and a string that designates the activity
+	//PROCESSING: sets weight and time based on validated input and calls the calcCals() function
+	//OUTPUT: displays output to the console and returns nothing
+
+	Declare Real weight, time, calories
+	
+	Set weight = 0.45359237 * validateInput("weight", "lbs")
+	Set time = validateInput("time you spent exercising", "minutes")
+	Set calories = calcCals(weight, time, metvalue)
+	Return calories
+End Function
+
+Function Real calcCals(Real W, Real T, Real M)
+	//INPUT: Real W, T, and M are received
+	//PROCESSING: calculates calories burned as a function of input
+	//OUTPUT: returns calories burned as Real C
+
+	Declare Real C
+
+	C = M * 3.5 * W / 200 * T
+	Return C
+End Function
+
+Function Real validateInput(String readIn, String units)
+	//Input: string values for the name of the input value to be read and the units it should display
+	//Processing: validates that the input is greater than zero
+	//Output: returns the validated input
+
+	Declare Real valueIn
+
+	//Priming read
+	Display "Enter the " & readIn & " in " & units
+	Input valueIn
+	
+	//Input validation
+	While valueIn <= 0
+		Display "ERROR! " & readIn & " must be a positive value."
+		
+		//Second read
+		Display "Enter the " & readIn & " in " & units
+		Input valueIn
+	End While
+	Return valueIn
+End Function
